@@ -2,7 +2,7 @@ package ru.polnomer1.price.web;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
+
 import org.springframework.web.bind.annotation.*;
 import ru.polnomer1.price.data.JpaProductRepository;
 import ru.polnomer1.price.model.Product;
