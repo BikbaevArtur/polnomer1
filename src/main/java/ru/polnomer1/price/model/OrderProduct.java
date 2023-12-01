@@ -1,30 +1,32 @@
 package ru.polnomer1.price.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+@Entity
 @Data
+@Table(name="order_product")
 public class OrderProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private Product product;
-    private List<Product> orderProduct = new ArrayList<>();
-    private List<OrderDetail> orderDetails = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name="client_id")
+    private Client client;
 
-    public void addProduct(Product product){
-        orderProduct.add(product);
+    @Temporal(TemporalType.DATE)
+    private Date orderDate;
+
+    @OneToMany(mappedBy = "orderProduct",cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems;
+
+    public OrderProduct(Client client, Date orderDate, List<OrderItem> orderItems) {
+        this.client = client;
+        this.orderDate = orderDate;
+        this.orderItems = orderItems;
     }
-    public void addOrderList(Client client,List<Product> orderProduct){
-        OrderDetail orderDetail = new OrderDetail(client,orderProduct);
-        orderDetails.add(orderDetail);
-    }
-
-
-
 }
